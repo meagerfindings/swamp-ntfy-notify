@@ -1,0 +1,22 @@
+{
+  "extension": "@mgreten/ntfy-notify",
+  "version": "2026.08.23.1",
+  "reviewedAt": "2026-08-23T21:26:43Z",
+  "dimensions": [
+    { "id": "credentials-secrets", "verdict": "pass", "note": "The extension accepts no credentials, marks outbox payloads sensitive, and warns against embedding tokens in non-sensitive URL configuration." },
+    { "id": "logging-quality", "verdict": "pass", "note": "Structured logs cover entry, success, HTTP failure, and network failure without payloads or idempotency keys." },
+    { "id": "error-handling", "verdict": "pass", "note": "The outbox adapter throws before writing on network and non-2xx failures so the caller can own retry state; the legacy send method retains its documented audit-record behavior." },
+    { "id": "testing-completeness", "verdict": "pass", "note": "Thirteen tests cover schemas, boundaries, HTTP success/failure, redaction, replay semantics, runtime-injected configuration, and topic encoding." },
+    { "id": "idempotency-resilience", "verdict": "pass", "note": "At-least-once semantics and the lack of provider-side deduplication are explicit; the outbox caller owns deduplication and retries." },
+    { "id": "api-contracts", "verdict": "pass", "note": "Requests use bounded schemas, encoded topic path segments, a 30-second timeout, status checks, and bounded status-text diagnostics." },
+    { "id": "resource-management", "verdict": "pass", "note": "Fetch is timeout-bounded and failure responses are not read into unbounded memory." },
+    { "id": "published-surface-hygiene", "verdict": "pass", "note": "The additive adapter is transport-specific, documented, and does not alter the existing send method." },
+    { "id": "schema-strictness", "verdict": "pass", "note": "Payload and option objects are strict and bounded; only the two known Swamp runtime-injected model configuration fields are tolerated." },
+    { "id": "lifetime-gc", "verdict": "pass", "note": "Notification audit records have a seven-day lifetime and bounded garbage collection." },
+    { "id": "crud-completeness", "verdict": "na", "note": "This transport model sends notifications and records attempts; it does not own a remote CRUD resource." },
+    { "id": "preflight-checks", "verdict": "na", "note": "The provider exposes no separate non-mutating validation endpoint; strict input validation and bounded HTTP execution are used." },
+    { "id": "instance-names", "verdict": "pass", "note": "Both methods write the same notification schema and use timestamp-plus-UUID names to avoid concurrent collisions." },
+    { "id": "data-access", "verdict": "pass", "note": "The model writes only its own notification audit resource and does not query unrelated model data." },
+    { "id": "version-upgrades", "verdict": "pass", "note": "The additive 2026.08.23.1 upgrade preserves existing attributes and the legacy send method." }
+  ]
+}
